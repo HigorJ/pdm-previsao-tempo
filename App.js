@@ -14,10 +14,7 @@ import {
 
 export default function App() {
   const [cidade, setCidade] = useState('');
-
-  const capturarCidade = (cidadeDigitada) => {
-    setCidade(cidade);
-  }
+  const [previsoes, setPrevisoes] = useState([]);
 
   return (
     <View style={styles.container}>
@@ -26,14 +23,21 @@ export default function App() {
           style={styles.cidadeTextInput}
           placeholder="Digite o nome da cidade"
           value={cidade}
-          onChangeText={capturarCidade}
+          onChangeText={setCidade}
         />        
         <Button 
           title="OK"
         />
       </View>
 
-      <FlatList />
+      <FlatList 
+        data={previsoes}
+        renderItem={
+          p => (
+            <Text>{JSON.stringify(p)}</Text>
+          )
+        }
+      />
     </View>
   );
 }
