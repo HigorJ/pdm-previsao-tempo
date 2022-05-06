@@ -1,7 +1,4 @@
-import { 
-  API_LANGUAGE
-} from '@env';
-
+import { useState } from 'react';
 import { 
   Button,
   FlatList, 
@@ -11,13 +8,25 @@ import {
   View 
 } from 'react-native';
 
+import { 
+  API_LANGUAGE
+} from '@env';
+
 export default function App() {
+  const [cidade, setCidade] = useState('');
+
+  const capturarCidade = (cidadeDigitada) => {
+    setCidade(cidade);
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.cidadeView}>
         <TextInput
           style={styles.cidadeTextInput}
           placeholder="Digite o nome da cidade"
+          value={cidade}
+          onChangeText={capturarCidade}
         />        
         <Button 
           title="OK"
