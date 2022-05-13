@@ -17,6 +17,8 @@ import {
   API_APPID
 } from '@env';
 
+import PrevisaoItem from './components/previsaoItem';
+
 export default function App() {
   const [cidade, setCidade] = useState('');
   const [previsoes, setPrevisoes] = useState([]);
@@ -24,6 +26,10 @@ export default function App() {
   const obterPrevisoes = () => {
     const url = encodeURI(`${API_PROTOCOL}://${API_BASE_URL}?units=${API_UNITS}&cnt=${API_CNT}&lang=${API_LANGUAGE}&appid=${API_APPID}&q=${cidade}`);
     console.log(url);
+
+    fetch(url)
+      .then(response => response.json())
+      .then(dados => setPrevisoes(dados['list']))
   }
 
   return (
@@ -41,14 +47,16 @@ export default function App() {
         />
       </View>
 
-      <FlatList 
-        data={previsoes}
-        renderItem={
-          p => (
-            <Text>{JSON.stringify(p)}</Text>
-          )
-        }
-      />
+      <View style={{ alignItems: 'center' }}>
+        <FlatList 
+          data={previsoes}
+          renderItem={
+            p => (
+              <PrevisaoItem previsao={p.item} />
+            )
+          }
+        />
+      </View>
     </View>
   );
 }
